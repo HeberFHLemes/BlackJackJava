@@ -5,14 +5,11 @@ import java.util.List;
 
 public class Jogador {
 
-    private List<Carta> cartas = new ArrayList<>();
-    private boolean isBanca;
-    private String nome;
+    private final List<Carta> cartas;
     private STATUS_JOGADOR status;
 
-    public Jogador(boolean isBanca){
-        this.isBanca = isBanca;
-        this.nome = isBanca ? "Banca" : "Você";
+    public Jogador(){
+        this.cartas = new ArrayList<>();
     }
 
     public void receberCarta(Carta carta){

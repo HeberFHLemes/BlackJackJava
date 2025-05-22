@@ -1,7 +1,5 @@
 package model;
 
-
-
 public class Jogo {
 
     private STATUS_JOGO status;
@@ -11,8 +9,8 @@ public class Jogo {
 
     public Jogo(){
         this.baralho = new Baralho();
-        this.jogador = new Jogador(false);
-        this.banca = new Jogador(true);
+        this.jogador = new Jogador();
+        this.banca = new Jogador();
         this.status = STATUS_JOGO.EM_ANDAMENTO;
 
         this.jogador.setStatus(STATUS_JOGADOR.JOGANDO);
