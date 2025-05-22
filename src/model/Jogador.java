@@ -33,14 +33,18 @@ public class Jogador {
 
     public int calcularMao(){
         int soma = 0;
+        int ases = 0;
         for (Carta carta : this.cartas){
-            // Considerando que ao atingir ou passar de 21 o jogo pare,
-            // somar ÁS como 11 apenas se a soma for menor que 11.
-            if (carta.isAs() && soma >= 11){
-                soma += 1;
-            } else {
-                soma += carta.getValor();
+            // Contabiliza o número de Ás na mão para depois definir o melhor valor deles no contexto (1 ou 11)
+            if (carta.isAs()){
+                ases += 1;
             }
+            soma += carta.getValor();
+        }
+        // Enquanto a soma for maior que 21 e houver ases contabilizados, diminui-se a soma por 10 até ficar abaixo de 21.
+        while (soma > 21 && ases > 0){
+            soma -= 10;
+            ases -= 1;
         }
         return soma;
     }

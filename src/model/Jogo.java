@@ -19,14 +19,6 @@ public class Jogo {
         this.banca.setStatus(STATUS_JOGADOR.JOGANDO);
     }
 
-    public STATUS_JOGO getStatus(){
-        return this.status;
-    }
-
-    public Baralho getBaralho(){
-        return this.baralho;
-    }
-
     public void setStatus() {
 
         if (this.jogador.getMao().isEmpty()) {
@@ -50,25 +42,28 @@ public class Jogo {
         }
     }
 
-    public static void iniciarJogo(){
+    public static Jogo iniciarJogo(){
         System.out.println("=== INICIANDO JOGO ===");
         Jogo jogo = new Jogo();
         jogo.distribuirCartasIniciais();
         jogo.informarMaos();
-        jogo.finalizarJogo(jogo);
+        return jogo;
     }
 
-    public void finalizarJogo(Jogo jogo){
+    public void finalizarJogo(){
         System.out.println();
-        jogo.informarMaos();
+        this.informarMaos();
 
         // Mudar status apenas quando ambos os participantes pararem de comprar ou um deles estourarem/alcançarem 21
         // (Quando finalizarJogo() for chamado)
-        jogo.setStatus();
+        this.setStatus();
         System.out.println();
 
         // Resultado final
-        jogo.informarResultado();
+        this.informarResultado();
+
+        this.jogador.limparMao();
+        this.banca.limparMao();
     }
 
     public void informarResultado(){
@@ -123,7 +118,53 @@ public class Jogo {
         System.out.println();
     }
 
+    // Banca só compra até 17
     public void bancaCompra(){
         this.banca.receberCarta(this.baralho.comprarCarta());
+    }
+
+    public void bancaJoga(){
+        while (this.banca.getStatus()  == STATUS_JOGADOR.JOGANDO){
+            int maoBanca = this.banca.calcularMao();
+            if (maoBanca <= 17 && maoBanca < this.jogador.calcularMao()){
+                bancaCompra();
+                System.out.print("Banca comprou uma carta:\n>");
+                banca.getMao().forEach(carta -> System.out.print(carta + " "));
+                System.out.println();
+            } else {
+                this.banca.setStatus(STATUS_JOGADOR.PAROU);
+            }
+        }
+    }
+
+    public void jogadorCompra(){
+        if (this.jogador.calcularMao() < 21){
+            this.jogador.receberCarta(this.baralho.comprarCarta());
+        } else {
+            System.out.println("Jogador já soma 21 ou mais, impossível comprar. ");
+        }
+    }
+
+    // Mesma lógica entre banca e jogador
+    private void participantePara(Jogador jogador){
+        if (!jogador.estourou()){
+            jogador.setStatus(STATUS_JOGADOR.PAROU);
+        }
+    }
+
+    public void bancaPara(){
+        participantePara(this.banca);
+    }
+
+    public void jogadorPara(){
+        participantePara(this.jogador);
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public Jogador getBanca() {
+        return banca;
     }
 }

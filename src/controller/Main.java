@@ -1,6 +1,7 @@
 package controller;
 
 import model.Jogo;
+import model.STATUS_JOGADOR;
 
 import java.util.Scanner;
 
@@ -28,7 +29,7 @@ public class Main {
                     case 0:
                         break;
                     case 1:
-                        Jogo.iniciarJogo();
+                        jogar(scanner);
                         break;
                     default:
                         System.out.println("> Opção inválida!");
@@ -46,5 +47,42 @@ public class Main {
             escolha = -1;
         }
         return escolha;
+    }
+
+    private static void jogar(Scanner scanner){
+        Jogo jogo = Jogo.iniciarJogo();
+        if (jogo.getJogador().getStatus().equals(STATUS_JOGADOR.BLACKJACK) || jogo.getBanca().getStatus().equals(STATUS_JOGADOR.BLACKJACK)){
+            System.out.println("BlackJack!");
+            jogo.finalizarJogo();
+            return;
+        }
+        while (jogo.getJogador().getStatus() == STATUS_JOGADOR.JOGANDO){
+            System.out.println("=====================");
+            System.out.println("\nO que deseja fazer?");
+            System.out.println("=====================");
+            System.out.println("""
+                [1] - COMPRAR
+                [2] - PARAR
+                [3] - VISUALIZAR MÃO
+                """);
+            int escolha = getEscolha(scanner);
+            switch (escolha){
+                case 1:
+                    jogo.jogadorCompra();
+                    break;
+                case 2:
+                    jogo.jogadorPara();
+                    break;
+                case 3:
+                    jogo.informarMaos();
+                    break;
+                default:
+                    System.out.println("Opção inválida...");
+            }
+        }
+
+        jogo.bancaJoga();
+
+        jogo.finalizarJogo();
     }
 }
