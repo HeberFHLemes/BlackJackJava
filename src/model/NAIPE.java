@@ -8,7 +8,7 @@ public enum NAIPE {
 
     private final String naipe;
 
-    private NAIPE(String naipe){
+    NAIPE(String naipe){
         this.naipe = naipe;
     }
 

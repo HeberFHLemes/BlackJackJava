@@ -16,9 +16,9 @@ public enum VALOR {
     REI(10),
     AS(11);
 
-    private int valor;
+    private final int valor;
 
-    private VALOR(int valor){
+    VALOR(int valor){
         this.valor = valor;
     }
 

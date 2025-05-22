@@ -1,7 +1,5 @@
 package controller;
 
-import model.Baralho;
-import model.Jogador;
 import model.Jogo;
 
 import java.util.Scanner;
@@ -14,7 +12,7 @@ public class Main {
                     === JAVA BLACKJACK GAME ===
                     ===========================
                     """);
-            int escolha = 0;
+            int escolha;
             do {
                 System.out.println("""
                         ---------------------------
