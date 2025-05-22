@@ -50,20 +50,27 @@ public class Main {
     }
 
     private static void jogar(Scanner scanner){
+
+        // Início do jogo
         Jogo jogo = Jogo.iniciarJogo();
-        if (jogo.getJogador().getStatus().equals(STATUS_JOGADOR.BLACKJACK) || jogo.getBanca().getStatus().equals(STATUS_JOGADOR.BLACKJACK)){
-            System.out.println("BlackJack!");
+
+        // Verificar se um ou mais possuem blackjack
+        if (jogo.getJogador().getStatus() != STATUS_JOGADOR.JOGANDO || jogo.getBanca().getStatus() != STATUS_JOGADOR.JOGANDO){
+            if (jogo.getJogador().getStatus().equals(STATUS_JOGADOR.BLACKJACK)) System.out.println("Você saiu com Blackjack!");
+            if (jogo.getBanca().getStatus().equals(STATUS_JOGADOR.BLACKJACK)) System.out.println("A Banca saiu com Blackjack!");
             jogo.finalizarJogo();
             return;
         }
+
+        // Vez do jogador
         while (jogo.getJogador().getStatus() == STATUS_JOGADOR.JOGANDO){
             System.out.println("=====================");
-            System.out.println("\nO que deseja fazer?");
+            System.out.println("        ESCOLHA");
             System.out.println("=====================");
             System.out.println("""
                 [1] - COMPRAR
                 [2] - PARAR
-                [3] - VISUALIZAR MÃO
+                [3] - CONFERIR
                 """);
             int escolha = getEscolha(scanner);
             switch (escolha){
@@ -81,8 +88,10 @@ public class Main {
             }
         }
 
+        // Vez da banca
         jogo.bancaJoga();
 
+        // Fim
         jogo.finalizarJogo();
     }
 }

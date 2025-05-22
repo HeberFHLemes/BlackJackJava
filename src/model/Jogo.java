@@ -122,6 +122,7 @@ public class Jogo {
     }
 
     public void bancaJoga(){
+        if (this.jogador.estourou()) return;
         while (this.banca.getStatus()  == STATUS_JOGADOR.JOGANDO){
             int maoBanca = this.banca.calcularMao();
             if (maoBanca <= 17 && maoBanca < this.jogador.calcularMao()){
@@ -138,8 +139,6 @@ public class Jogo {
     public void jogadorCompra(){
         if (this.jogador.calcularMao() < 21){
             this.jogador.receberCarta(this.baralho.comprarCarta());
-        } else {
-            System.out.println("Jogador já soma 21 ou mais, impossível comprar. ");
         }
     }
 
