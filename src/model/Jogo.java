@@ -5,9 +5,9 @@ package model;
 public class Jogo {
 
     private STATUS_JOGO status;
-    private Baralho baralho;
-    private Jogador jogador;
-    private Jogador banca;
+    private final Baralho baralho;
+    private final Jogador jogador;
+    private final Jogador banca;
 
     public Jogo(){
         this.baralho = new Baralho();
@@ -145,19 +145,10 @@ public class Jogo {
         }
     }
 
-    // Mesma lógica entre banca e jogador
-    private void participantePara(Jogador jogador){
-        if (!jogador.estourou()){
-            jogador.setStatus(STATUS_JOGADOR.PAROU);
-        }
-    }
-
-    public void bancaPara(){
-        participantePara(this.banca);
-    }
-
     public void jogadorPara(){
-        participantePara(this.jogador);
+        if (this.jogador.getStatus().equals(STATUS_JOGADOR.JOGANDO)){
+            this.jogador.setStatus(STATUS_JOGADOR.PAROU);
+        }
     }
 
     public Jogador getJogador() {

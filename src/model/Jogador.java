@@ -65,7 +65,9 @@ public class Jogador {
         this.status = status;
     }
 
+    /*
     public boolean isBanca(){
         return this.isBanca;
     }
+     */
 }
