@@ -1,0 +1,11 @@
+package model;
+
+public enum STATUS_JOGO {
+    EM_ANDAMENTO,
+    JOGADOR_VENCEU,
+    BANCA_VENCEU,
+    EMPATE,
+    JOGADOR_ESTOUROU,
+    BANCA_ESTOUROU,
+    FINALIZADO
+}
