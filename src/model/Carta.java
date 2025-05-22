@@ -25,6 +25,6 @@ public class Carta {
 
     @Override
     public String toString(){
-        return "|" + this.valor.getValor() + this.naipe.getNaipe() + "|";
+        return "|" + (this.valor.isAs() ? "A" : this.valor.getValor()) + this.naipe.getNaipe() + "|";
     }
 }

@@ -121,17 +121,21 @@ public class Jogo {
         this.banca.receberCarta(this.baralho.comprarCarta());
     }
 
+    // Neste projeto, o jogador joga sua vez, realiza todos os movimentos,
+    // e então a banca joga, e o jogo finaliza, sem alternação movimento por movimento.
     public void bancaJoga(){
         if (this.jogador.estourou()) return;
-        while (this.banca.getStatus()  == STATUS_JOGADOR.JOGANDO){
-            int maoBanca = this.banca.calcularMao();
-            if (maoBanca <= 17 && maoBanca < this.jogador.calcularMao()){
+        int maoBanca;
+        while (this.banca.getStatus() == STATUS_JOGADOR.JOGANDO){
+            maoBanca = this.banca.calcularMao();
+            if (maoBanca < this.jogador.calcularMao() && !this.jogador.estourou()){
                 bancaCompra();
                 System.out.print("Banca comprou uma carta:\n>");
                 banca.getMao().forEach(carta -> System.out.print(carta + " "));
                 System.out.println();
             } else {
                 this.banca.setStatus(STATUS_JOGADOR.PAROU);
+                break;
             }
         }
     }
