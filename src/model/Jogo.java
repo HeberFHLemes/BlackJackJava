@@ -3,7 +3,7 @@ package model;
 public class Jogo {
 
     private STATUS_JOGO status;
-    private final Baralho baralho;
+    private Baralho baralho;
     private final Jogador jogador;
     private final Jogador banca;
 
@@ -40,15 +40,18 @@ public class Jogo {
         }
     }
 
+    public void setStatus(STATUS_JOGO status){
+        this.status = status;
+    }
+
     public static Jogo iniciarJogo(){
         System.out.println("=== INICIANDO JOGO ===");
         Jogo jogo = new Jogo();
         jogo.distribuirCartasIniciais();
-        jogo.informarMaos();
         return jogo;
     }
 
-    public void finalizarJogo(){
+    public void finalizarJogo(int aposta){
         System.out.println();
         this.informarMaos();
 
@@ -58,13 +61,13 @@ public class Jogo {
         System.out.println();
 
         // Resultado final
-        this.informarResultado();
+        this.informarResultado(aposta);
 
         this.jogador.limparMao();
         this.banca.limparMao();
     }
 
-    public void informarResultado(){
+    public void informarResultado(int aposta){
         switch (this.status) {
             case EM_ANDAMENTO -> {
                 System.out.println("Jogo ainda em andamento...");
@@ -76,17 +79,49 @@ public class Jogo {
                 else if (this.jogador.getStatus().equals(STATUS_JOGADOR.ESTOUROU)) System.out.print(" com os dois estourando");
                 System.out.println("! ");
             }
-            case JOGADOR_ESTOUROU -> System.out.println("Sua mão passou de 21, estourou! Banca venceu.");
-            case BANCA_ESTOUROU -> System.out.println("Banca passou de 21, estourou! Você venceu.");
+            case JOGADOR_ESTOUROU -> {
+                System.out.println("Sua mão passou de 21, estourou! Banca venceu.");
+
+                this.jogador.setFichas(this.jogador.getFichas() - aposta);
+                this.banca.setFichas(this.banca.getFichas() + aposta);
+                System.out.println("Você perdeu " + aposta + " fichas...");
+            }
+            case BANCA_ESTOUROU -> {
+                System.out.println("Banca passou de 21, estourou! Você venceu.");
+
+                this.jogador.setFichas(this.jogador.getFichas() + aposta);
+
+                if (aposta < this.banca.getFichas()) {
+                    this.banca.setFichas(this.banca.getFichas() - aposta);
+                } else {
+                    this.banca.setFichas(0);
+                }
+
+                System.out.println("Você ganhou " + aposta + " fichas! ");
+            }
             case JOGADOR_VENCEU -> {
                 System.out.print("Parabéns, você venceu");
                 if (this.jogador.getStatus().equals(STATUS_JOGADOR.BLACKJACK)) System.out.print(" com BlackJack");
                 System.out.println("! ");
+
+                this.jogador.setFichas(this.jogador.getFichas() + aposta);
+
+                if (aposta < this.banca.getFichas()) {
+                    this.banca.setFichas(this.banca.getFichas() - aposta);
+                } else {
+                    this.banca.setFichas(0);
+                }
+
+                System.out.println("Você ganhou " + aposta + " fichas! ");
             }
             case BANCA_VENCEU -> {
                 System.out.print("A Banca venceu");
                 if (this.banca.getStatus().equals(STATUS_JOGADOR.BLACKJACK)) System.out.print(" com BlackJack");
                 System.out.println("! ");
+
+                this.jogador.setFichas(this.jogador.getFichas() - aposta);
+                this.banca.setFichas(this.banca.getFichas() + aposta);
+                System.out.println("Você perdeu " + aposta + " fichas...");
             }
         }
         this.status = STATUS_JOGO.FINALIZADO;
@@ -158,5 +193,18 @@ public class Jogo {
 
     public Jogador getBanca() {
         return banca;
+    }
+
+    // Preparar baralho se necessário, ajustar status de jogo e jogadores e distribuir novas cartas.
+    public void prepararNovaRodada(){
+
+        if (this.baralho.getCartas().size() < 12) this.baralho = new Baralho();
+
+        this.setStatus(STATUS_JOGO.EM_ANDAMENTO);
+
+        this.getBanca().setStatus(STATUS_JOGADOR.JOGANDO);
+        this.getJogador().setStatus(STATUS_JOGADOR.JOGANDO);
+
+        this.distribuirCartasIniciais();
     }
 }

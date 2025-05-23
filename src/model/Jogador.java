@@ -8,8 +8,28 @@ public class Jogador {
     private final List<Carta> cartas;
     private STATUS_JOGADOR status;
 
+    // Apostas em cada rodada: Jogador começa com 500, para com 0 e pode ir até 1000 (banido do jogo).
+    // Baseado na transferência Banca ↔ Jogador.
+    private int fichas;
+
     public Jogador(){
         this.cartas = new ArrayList<>();
+        this.fichas = 500;
+    }
+
+    /* Possibilidade
+    public Jogador(int fichas){
+        this.cartas = new ArrayList<>();
+        this.fichas = fichas;
+    }
+    */
+
+    public void setFichas(int fichas){
+        this.fichas = fichas;
+    }
+
+    public int getFichas(){
+        return this.fichas;
     }
 
     public void receberCarta(Carta carta){
@@ -61,10 +81,4 @@ public class Jogador {
     public void setStatus(STATUS_JOGADOR status){
         this.status = status;
     }
-
-    /*
-    public boolean isBanca(){
-        return this.isBanca;
-    }
-     */
 }

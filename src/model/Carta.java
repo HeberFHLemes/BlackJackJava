@@ -13,12 +13,6 @@ public class Carta {
         return valor.getValor();
     }
 
-    /*
-    public String getNaipe(){
-        return naipe.getNaipe();
-    }
-     */
-
     public boolean isAs(){
         return valor.isAs();
     }

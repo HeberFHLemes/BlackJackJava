@@ -27,9 +27,7 @@ public class Baralho {
         return cartas.isEmpty() ? null : cartas.remove(cartas.size() - 1);
     }
 
-    /*
-    public boolean estaVazio(){
-        return cartas.isEmpty();
+    public List<Carta> getCartas(){
+        return this.cartas;
     }
-     */
 }
