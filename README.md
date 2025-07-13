@@ -1,13 +1,10 @@
 # ♠ Java Black Jack Game ♠
 
-♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦
 ### Funcionalidades
 - Múltiplas rodadas;
 - Sistema de apostas;
 - Jogador X Banca;
 - Comprar carta, Parar de comprar e Conferir mão atual;
-
-♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦
 
 <hr>
 
@@ -16,5 +13,4 @@
 <hr>
 
 ###### GIF from (https://giphy.com/gifs/looneytunes-game-poker-5yYoECDolGySFHKZYl)
-
 ♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦♣♥♠♦
